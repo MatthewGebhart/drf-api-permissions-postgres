@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-e!86n$wikmcdhg1lnsrd-oax81ywb69%f6x3@05%+*z%@gd%&z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1']
 
 
 # Application definition
@@ -79,10 +79,22 @@ WSGI_APPLICATION = "otters_api_project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# Switching from sqlite to postgresql
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "postgres",
+        "USER": "postgres",
+        "PASSWORD": "postgres",
+        "HOST": "db",
+        "PORT": 5432,
     }
 }
 
@@ -131,9 +143,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # New!
 # https://www.django-rest-framework.org/api-guide/permissions/
-#"AllowAny" is good for development bad for security, use "IsAuthenticated" for a "real" app.
+# "AllowAny" is good for development bad for security, use "IsAuthenticated" for a "real" app.
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ]
 }

@@ -1,5 +1,5 @@
-# LAB - Class 31
-## Project: Django REST Framework & Docker
+# LAB - Class 32
+## Project: Django REST Permissions & Postgresql
 ## Author: Matthew Gebhart
 
 ## Setup
