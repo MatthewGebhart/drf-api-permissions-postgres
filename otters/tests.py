@@ -23,6 +23,10 @@ class OtterTests(APITestCase):
         )
         test_thing.save()
 
+    def setUp(self):
+        self.client.login(username="testuser1", password="pass")
+
+
     def test_otters_model(self):
         otter = Otter.objects.get(id=1)
         actual_owner = str(otter.owner)
@@ -78,3 +82,11 @@ class OtterTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         otters = Otter.objects.all()
         self.assertEqual(len(otters), 0)
+
+        # New
+
+    def test_authentication_required(self):
+        self.client.logout()
+        url = reverse("otter_list")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
